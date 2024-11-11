@@ -20,16 +20,18 @@ class HashMap {
   set(key, value) {
     const hashCode = this.hash(key);
     const index = hashCode % 16;
+    const entry = { [key]: value };
+
     if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bound");
     }
 
     if (!this.buckets[index]) {
       const list = new LinkedList();
-      list.append(value);
+      list.append(entry);
       this.buckets[index] = list;
     } else {
-      this.buckets[index].append(value);
+      this.buckets[index].append(entry);
     }
   }
 
