@@ -62,9 +62,13 @@ class HashMap {
     }
 
     if (this.mapSize > this.capacity * this.loadFactor) {
-      const extraSpace = Array(this.capacity);
-      this.buckets.push(...extraSpace);
-      this.capacity *= 2;
+      const entries = this.entries();
+      this.buckets = Array(this.capacity * 2);
+      this.capacity = this.buckets.length;
+      this.mapSize = 0;
+      for (const entry of entries) {
+        this.set(entry[0], entry[1]);
+      }
     }
   }
 
@@ -203,12 +207,11 @@ console.log(test.has("apple"));
 console.log(test.remove("apple"));
 console.log(test.has("apple"));
 
+console.log(test.buckets);
+
 test.set("sweater", "black");
 test.set("watermelon", "green");
 
-console.log(test.buckets.length);
-
-test.clear();
-console.log(test.buckets.length);
+console.log(test.buckets);
 console.log(test.remove("apple"));
 console.log(test.entries());
