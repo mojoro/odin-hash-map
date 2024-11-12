@@ -196,6 +196,54 @@ class LinkedList {
   }
 
   /**
+   * Recursively returns all the keys of the nodes as an array.
+   * @param {Node} [node=this.headNode] - The current node.
+   * @param {array} [array=[]] - The current array.
+   * @returns {array} The array representation of the list's keys.
+   */
+  keys(node = this.headNode, keyArray = []) {
+    if (!node.nextNode || !node.nextNode.value) {
+      keyArray.push(node.key);
+      return keyArray;
+    } else if (node) {
+      keyArray.push(node.key);
+      return this.keys(node.nextNode, keyArray);
+    }
+  }
+
+  /**
+   * Recursively returns all the values of the nodes as an array.
+   * @param {Node} [node=this.headNode] - The current node.
+   * @param {array} [array=[]] - The current array.
+   * @returns {array} The array representation of the list's values.
+   */
+  values(node = this.headNode, valueArray = []) {
+    if (!node.nextNode || !node.nextNode.value) {
+      valueArray.push(node.value);
+      return valueArray;
+    } else if (node) {
+      valueArray.push(node.key);
+      return this.values(node.nextNode, valueArray);
+    }
+  }
+
+  /**
+   * Recursively returns all the entries of the nodes as an array.
+   * @param {Node} [node=this.headNode] - The current node.
+   * @param {array} [array=[]] - The current array.
+   * @returns {array} The array representation of the list's entries.
+   */
+  entries(node = this.headNode, entriesArray = []) {
+    if (!node.nextNode || !node.nextNode.value) {
+      entries.push([node.key, node.value]);
+      return entriesArray;
+    } else if (node) {
+      entries.push([node.key, node.value]);
+      return this.entries(node.nextNode, entriesArray);
+    }
+  }
+
+  /**
    * Inserts a new node at a specific index.
    * @param {string} key - The key of the new node.
    * @param {*} value - The value of the new node.
