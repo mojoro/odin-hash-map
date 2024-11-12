@@ -140,9 +140,11 @@ class LinkedList {
    * @param {Node} [node=this.headNode] - The current node.
    * @param {Node} [prevNode=""] - The previous node.
    */
-  pop(node = this.headNode, prevNode = "") {
-    if (!node.nextNode || !node.nextNode.value) {
+  pop(node = this.headNode, prevNode = null) {
+    if ((!node.nextNode || !node.nextNode.value) && prevNode) {
       prevNode.setNext(null);
+    } else if (node.key == this.headNode.key) {
+      this.headNode = node.nextNode;
     } else {
       return this.pop(node.nextNode, node);
     }
@@ -235,10 +237,10 @@ class LinkedList {
    */
   entries(node = this.headNode, entriesArray = []) {
     if (!node.nextNode || !node.nextNode.value) {
-      entries.push([node.key, node.value]);
+      entriesArray.push([node.key, node.value]);
       return entriesArray;
     } else if (node) {
-      entries.push([node.key, node.value]);
+      entriesArray.push([node.key, node.value]);
       return this.entries(node.nextNode, entriesArray);
     }
   }
@@ -270,8 +272,8 @@ class LinkedList {
    * @param {Node} [node=this.headNode] - The current node.
    * @param {Node} [prevNode=""] - The previous node.
    */
-  removeAt(index, node = this.headNode, prevNode = "") {
-    if (index == 0) {
+  removeAt(index, node = this.headNode, prevNode = null) {
+    if (index == 0 && prevNode) {
       prevNode.setNext(node.nextNode);
     } else if (node.nextNode) {
       return this.removeAt(index - 1, node.nextNode, node);
